@@ -73,7 +73,6 @@ public class PersonDomainModel {
     }
     
    
-    
     public String getFirstName() {
         return firstName;
     }

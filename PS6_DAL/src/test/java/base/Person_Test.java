@@ -6,16 +6,21 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import domain.PersonDomainModel;
 import java.time.Month;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 import java.time.Instant;
 import java.time.LocalDate;
 import domain.PersonDomainModel;
 import base.PersonDAL;
+import org.junit.runners.MethodSorters;
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 
 public class Person_Test {
 	
@@ -49,26 +54,37 @@ public class Person_Test {
 
 
 	@Test
-	public void AddPersonTest() {
+	public void Test1_AddPersonTest() {
+		
 		
 		PersonDAL.addPerson(person1);
 		PersonDAL.addPerson(person2);
 		
+		
+		assertEquals("Method didn't work", PersonDAL.getPersons().get(1).getFirstName(),"Joe");
+		assertEquals("Method didn't work", PersonDAL.getPersons().get(0).getFirstName(),"Jess");
 	}
 	
 	@Test
-	public void UpdatePersonTest() {	
+	public void Test2_UpdatePersonTest() {	
 		
 		person1.setFirstName("John");
-		PersonDAL.updatePerson(person1);	
+		PersonDAL.updatePerson(person1);
 		
+		assertEquals("Method didn't work", PersonDAL.getPersons().get(1).getFirstName(),"John");
 	}
 	
 	
 	@Test
-	public void DeletePersonTest() {
+	public void Test3_DeletePersonTest() {
 		
 		PersonDAL.deletePerson(person1.getPersonUUID());
+		PersonDAL.deletePerson(person2.getPersonUUID());
+		
+	
+		assertTrue("Method didn't work", PersonDAL.getPersons().size() == 0);
+		
+		
 		
 	}
 	
